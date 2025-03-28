@@ -4,6 +4,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import userRouter from "./routes/user.route.js";
+import roomRouter from "./routes/room.route.js";
+import hotelRouter from "./routes/hotel.route.js";
 
 dotenv.config();
 const PORT=process.env.PORT  || 8000
@@ -43,6 +45,8 @@ mongoose.connection.on("disconnected",()=>{
 }
 )
 
+app.use("/api",roomRouter);
+app.use("/api",hotelRouter)
 app.listen(PORT,()=>{
     connect()
     console.log(`Server is running on port ${PORT}`)

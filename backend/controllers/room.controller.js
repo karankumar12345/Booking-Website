@@ -1,5 +1,5 @@
-import hotelModel from "../models/hotel.model";
-import roomModel from "../models/room.model";
+import hotelModel from "../models/hotel.model.js";
+import roomModel from "../models/room.model.js";
 
 
 
@@ -25,7 +25,26 @@ export const CreateRoom=async (req,res,next)=>{
     }
   
 }
+export const updateRoom=async (req,res,next)=>{
+  try {
 
+       const updatedRoom = await roomModel.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success:true,
+      updatedRoom
+    })
+  } catch (error) {
+    res.status(500).json({
+      success:false,
+      message:error.message
+  })
+  }
+}
 export const updateRoomAvailability=async(req,res,next)=>{
     try {
         await roomModel.updateOne({

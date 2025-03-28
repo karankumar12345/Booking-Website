@@ -1,5 +1,7 @@
 import express from "express";
 import { deleteUser, getAllUser, getUser, login, register, UpdateUser } from "../controllers/auth.controller.js";
+import { verifyAdmin } from "../utils/Token.js";
+import { CreateRoom, deleteRoom, getRoom, getRooms, updateRoom, updateRoomAvailability } from "../controllers/room.controller.js";
 
 const roomRouter=express.Router();
 
@@ -7,13 +9,13 @@ const roomRouter=express.Router();
 
 
 
-roomRouter.post("/register",register);
-roomRouter.post("/login",login)
+roomRouter.post("/room/:hotelid",verifyAdmin,CreateRoom);
+roomRouter.put("/room/availability/:id",updateRoomAvailability)
 
-roomRouter.put("/user/:id",UpdateUser);
-roomRouter.delete("/user/:id",deleteUser)
-roomRouter.get("/user/:id", getUser)
-roomRouter.get("/users", getAllUser)
+roomRouter.put("/room/:id",verifyAdmin,updateRoom);
+roomRouter.delete("/room/:id/:hotelid",verifyAdmin,deleteRoom)
+roomRouter.get("/room/:id", getRoom)
+roomRouter.get("/rooms", getRooms)
 export default roomRouter
 
 
